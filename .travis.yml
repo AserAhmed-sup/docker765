@@ -1,0 +1,13 @@
+sudo: required
+language: generic
+
+
+services:
+  - docker
+
+before install:
+  - docker build -t aserahmed/docker-react -f dockerfile.dev .
+
+
+script:
+  - docker run -e CI=true aserahmed/docker-react npm run test
