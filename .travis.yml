@@ -5,7 +5,7 @@ language: generic
 services:
   - docker
 
-before install:
+before_install:
   - docker build -t aserahmed/docker-react -f dockerfile.dev .
 
 
