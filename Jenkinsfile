@@ -2,20 +2,23 @@ pipeline {
     agent {
         label 'docker'
     }
+ 
     stages {
-        stage('Build docker image') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t AserAhmed/docker-react -f dockerfile.dev .'
+                    sh 'docker build -t ahmedgamil/docker-react -f Dockerfile.dev .'
                 }
-            }   
+            }
         }
-    stages ('run Tests') {
-        steps {
-            script {
-                sh 'docker run -e CI=true AserAhmed/docker-react npm run test'
+ 
+        stage('Tests') {
+            steps {
+                script {
+                    env.DOCKER_BUILDKIT = 1
+                    sh 'docker run -e CI=true ahmedgamil/docker-react npm run test'
+                }
             }
         }
     }
-}
 }
