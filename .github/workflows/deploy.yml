@@ -1,43 +1,43 @@
-# name: deploy react
+name: deploy react
 
-# on:
-#   push:
-#     branches:
-#       - master
-#   workflow_dispatch:
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-#       - name: Login to Docker Hub
-#         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-#       - name: Build Docker image
-#         run: docker build -t aserahmed/docker-react -f Dockerfile.dev .
+      - name: Build Docker image
+        run: docker build -t aserahmed/docker-react -f Dockerfile.dev .
 
-#       - name: Run tests
-#         run: docker run -e CI=true aserahmed/docker-react npm run test
+      - name: Run tests
+        run: docker run -e CI=true aserahmed/docker-react npm run test
 
-#       - name: Generate deployment package
-#         run: |
-#           mkdir deploy
-#           cp package*.json deploy/
-#           cp -r public src deploy/
-#           cp Dockerfile deploy/
-#           cd deploy
-#           zip -r ../deploy.zip .
+      - name: Generate deployment package
+        run: |
+          mkdir deploy
+          cp package*.json deploy/
+          cp -r public src deploy/
+          cp Dockerfile deploy/
+          cd deploy
+          zip -r ../deploy.zip .
 
-#       - name: Deploy to Elastic Beanstalk
-#         uses: einaregilsson/beanstalk-deploy@v22
-#         with:
-#           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           application_name: "sayed"
-#           environment_name: "Sayed-env"
-#           version_label: ${{ github.sha }}
-#           region: eu-north-1
-#           deployment_package: deploy.zip
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v22
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: "sayed"
+          environment_name: "Sayed-env"
+          version_label: ${{ github.sha }}
+          region: eu-north-1
+          deployment_package: deploy.zip
