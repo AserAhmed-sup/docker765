@@ -22,6 +22,18 @@ jobs:
       - name: Run tests
         run: docker run -e CI=true aserahmed/docker-react npm run test
 
+      - name: Build microservices
+        run: |
+          docker build -t aserahmed/multi-client ./microservices/client
+          docker build -t aserahmed/multi-nginx ./microservices/nginx
+          docker build -t aserahmed/multi-server ./microservices/server
+          docker build -t aserahmed/multi-worker ./microservices/worker
+
+      - run: docker push aserahmed/multi-client
+      - run: docker push aserahmed/multi-nginx
+      - run: docker push aserahmed/multi-server
+      - run: docker push aserahmed/multi-worker
+
       - name: Generate deployment package
         run: |
           mkdir deploy
@@ -40,4 +52,4 @@ jobs:
           environment_name: "ReactDeploy-env "
           version_label: ${{ github.sha }}
           region: eu-north-1
-          deployment_package: deploy.zip
+          deployment_package: deploy.zip 
