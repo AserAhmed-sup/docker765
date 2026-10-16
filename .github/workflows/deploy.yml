@@ -24,10 +24,10 @@ jobs:
 
       - name: Build microservices
         run: |
-          docker build -t asercodesmaybe/multi-client ./microservices/client
-          docker build -t asercodesmaybe/multi-nginx ./microservices/nginx
-          docker build -t asercodesmaybe/multi-server ./microservices/server
-          docker build -t asercodesmaybe/multi-worker ./microservices/worker
+          docker build -t asercodesmaybe/multi-client ./micro/microservices/client
+          docker build -t asercodesmaybe/multi-nginx ./micro/microservices/nginx
+          docker build -t asercodesmaybe/multi-server ./micro/microservices/server
+          docker build -t asercodesmaybe/multi-worker ./micro/microservices/worker
 
       - run: docker push asercodesmaybe/multi-client
       - run: docker push asercodesmaybe/multi-nginx
